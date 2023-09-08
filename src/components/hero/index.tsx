@@ -1,8 +1,8 @@
 import type { FC } from "react";
 
-const Header: FC = () => {
+const Hero: FC = () => {
   return (
-    <div className="w-[80%] m-auto flex  justify-around  ">
+    <div className="flex  justify-around  ">
       <div>
         <div className="text-[#3D3D3D] text-[14px] uppercase mt-[80px]">
           WELCOME TO GREENSHOP
@@ -34,4 +34,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default Hero;
