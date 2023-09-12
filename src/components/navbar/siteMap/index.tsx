@@ -24,7 +24,7 @@ const SiteMap: FC = () => {
       footer={false}
     >
       <div className="flex gap-4 flex-col mt-5">
-        <h3 className={` ${lint_active_style} ${custom_link_style}`}>Home</h3>
+        <h3 className={`  ${lint_active_style} ${custom_link_style}`}>Home</h3>
         <h3 className={` ${lint_hover_style} ${custom_link_style}`}>Blog</h3>
       </div>
       <button className="w-[80%] m-auto flex gap-3  rounded-md items-center justify-center bg-[#46a358] h-[49px] mt-[41px] text-white font-medium text-[16px] ">

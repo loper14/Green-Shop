@@ -7,8 +7,12 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import SiteMap from "./siteMap";
-import { setSiteMapModalVisibility } from "../../redux/modalSlice";
+import {
+  setRegisterModalVisibility,
+  setSiteMapModalVisibility,
+} from "../../redux/modalSlice";
 import { useReduxDispatch } from "../../hooks/useRedux";
+import RegisterModal from "./registerModal";
 
 const Navbar: FC = () => {
   const dispatch = useReduxDispatch();
@@ -30,7 +34,12 @@ const Navbar: FC = () => {
         <SearchOutlined className={icon_style} />
         <BellOutlined className={icon_style} />
         <ShoppingCartOutlined className={icon_style} />
-        <button className="text-white w-[100px] h-[35px] cursor-pointer bg-[#46A358] flex items-center justify-center rounded-md gap-2 max-md:hidden ">
+        <button
+          onClick={() => {
+            dispatch(setRegisterModalVisibility());
+          }}
+          className="text-white w-[100px] h-[35px] cursor-pointer bg-[#46A358] flex items-center justify-center rounded-md gap-2 max-md:hidden "
+        >
           <LoginOutlined /> Login
         </button>
         <MenuOutlined
@@ -41,6 +50,7 @@ const Navbar: FC = () => {
         />
       </div>
       <SiteMap />
+      <RegisterModal />
     </div>
   );
 };
