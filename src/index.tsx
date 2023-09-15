@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider>
     <div className="w-[1400px] m-auto">
-   <Home/>
+      <Home />
     </div>
   </Provider>,
 );
