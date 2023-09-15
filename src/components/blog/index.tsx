@@ -3,7 +3,7 @@ import BlogCard from "../../generic/blogCard";
 
 const Blog: FC = () => {
   return (
-    <div className="h-[620px]">
+    <div className="h-[530px]">
       <h2 className="text-[#3D3D3D] text-[30px] font-bold text-center ">
         Our Blog Posts
       </h2>

@@ -2,8 +2,8 @@ import { Modal } from "antd";
 import type { FC } from "react";
 import { LoginOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { useReduxDispatch, useReduxSelector } from "../../../hooks/useRedux";
-import { setSiteMapModalVisibility } from "../../../redux/modalSlice";
+import { useReduxDispatch, useReduxSelector } from "../../../../hooks/useRedux";
+import { setSiteMapModalVisibility } from "../../../../redux/modalSlice";
 
 const SiteMap: FC = () => {
   const { siteMapModalVisibility } = useReduxSelector((store) => store.modal);

@@ -6,16 +6,19 @@ import {
   ShoppingCartOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
-import SiteMap from "./siteMap";
+import SiteMap from "../modalVisibility/modals/siteMap";
 import {
-  setRegisterModalVisibility,
+  setAuthModalVisibility,
   setSiteMapModalVisibility,
 } from "../../redux/modalSlice";
 import { useReduxDispatch } from "../../hooks/useRedux";
-import RegisterModal from "./registerModal";
+import { useAuthUser, useIsAuthenticated } from "react-auth-kit";
+import type { UserType } from "../../@types";
 
 const Navbar: FC = () => {
   const dispatch = useReduxDispatch();
+  const isAuthed = useIsAuthenticated()();
+  const auth: UserType = useAuthUser()() ?? {};
 
   const icon_style: string = "cursor-pointer text-[20px]";
   return (
@@ -36,11 +39,17 @@ const Navbar: FC = () => {
         <ShoppingCartOutlined className={icon_style} />
         <button
           onClick={() => {
-            dispatch(setRegisterModalVisibility());
+            dispatch(setAuthModalVisibility({ loading: false, open: true }));
           }}
           className="text-white w-[100px] h-[35px] cursor-pointer bg-[#46A358] flex items-center justify-center rounded-md gap-2 max-md:hidden "
         >
-          <LoginOutlined /> Login
+          {isAuthed ? (
+            `${String(auth.name)}`
+          ) : (
+            <>
+              <LoginOutlined /> Login
+            </>
+          )}
         </button>
         <MenuOutlined
           onClick={() => {
@@ -49,8 +58,6 @@ const Navbar: FC = () => {
           className={`${icon_style} hidden max-md:flex`}
         />
       </div>
-      <SiteMap />
-      <RegisterModal />
     </div>
   );
 };

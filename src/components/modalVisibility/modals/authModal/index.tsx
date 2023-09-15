@@ -1,20 +1,22 @@
 import { useState, type FC } from "react";
-import { useReduxSelector } from "../../../hooks/useRedux";
+import { useReduxSelector } from "../../../../hooks/useRedux";
 import Register from "./register";
 import { Modal } from "antd";
 import Login from "./login";
-import { setRegisterModalVisibility } from "../../../redux/modalSlice";
+import { setAuthModalVisibility } from "../../../../redux/modalSlice";
+
+type ActiveType = "login" | "register";
 
 const RegisterModal: FC = () => {
-  const { registerModalVisibility } = useReduxSelector((store) => store.modal);
-  const [activeSection, setActiveSection] = useState("register");
+  const { authModalVisibility } = useReduxSelector((store) => store.modal);
+  const [activeSection, setActiveSection] = useState<ActiveType>("login");
 
   return (
     <Modal
-      open={registerModalVisibility}
+      open={authModalVisibility.open}
       footer={false}
       onCancel={() => {
-        setRegisterModalVisibility();
+        setAuthModalVisibility({ loading: false, open: false });
       }}
     >
       <div className="flex gap-[10px] justify-center pt-[30px]">
