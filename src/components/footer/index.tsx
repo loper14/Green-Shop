@@ -33,7 +33,7 @@ const Footer: FC = () => {
           </div>
           <Space.Compact className="my-5">
             <Input
-              className="text-[#ACACAC] "
+              className="text-[#ACACAC] w-[250px] "
               defaultValue="enter your email address..."
             />
             <Button type="primary" className="bg-[#46A358]">
