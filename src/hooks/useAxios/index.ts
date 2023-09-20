@@ -3,8 +3,9 @@ import axios from "axios";
 interface AxiosProps {
   url: string;
   method?: "POST" | "PUT" | "PATCH" | "DELETE";
-  body: object;
+  body?: object;
   headers: object;
+  params?: object;
 }
 
 export const useAxios = () => {
@@ -17,7 +18,7 @@ export const useAxios = () => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
-        "Access-Control_Allow-Origin": true,
+        "Access-Control-Allow-Origin": true,
         ...headers,
       },
       params: {
