@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.2.7",
     "antd": "^5.8.6",
     "axios": "^1.5.0",
+    "firebase": "^10.4.0",
     "force": "^0.0.3",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.6",

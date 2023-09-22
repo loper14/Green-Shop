@@ -4,7 +4,7 @@ interface AxiosProps {
   url: string;
   method?: "POST" | "PUT" | "PATCH" | "DELETE";
   body?: object;
-  headers: object;
+  headers?: object;
   params?: object;
 }
 

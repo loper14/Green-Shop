@@ -8,6 +8,7 @@ interface ModalWithLoadingtype {
 interface ModalSliceType {
   siteMapModalVisibility: boolean;
   authModalVisibility: ModalWithLoadingtype;
+  inProcessModalVisibility: boolean;
 }
 
 const initialState: ModalSliceType = {
@@ -16,6 +17,7 @@ const initialState: ModalSliceType = {
     loading: false,
     open: false,
   },
+  inProcessModalVisibility: false,
 };
 const modalSlice = createSlice({
   name: "modalSlicer",
@@ -27,8 +29,14 @@ const modalSlice = createSlice({
     setAuthModalVisibility(state, { payload }) {
       state.authModalVisibility = payload;
     },
+    setInProcessModalVisibility(state) {
+      state.inProcessModalVisibility = !state.inProcessModalVisibility;
+    },
   },
 });
-export const { setSiteMapModalVisibility, setAuthModalVisibility } =
-  modalSlice.actions;
+export const {
+  setSiteMapModalVisibility,
+  setAuthModalVisibility,
+  setInProcessModalVisibility,
+} = modalSlice.actions;
 export default modalSlice.reducer;

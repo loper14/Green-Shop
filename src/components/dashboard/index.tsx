@@ -4,7 +4,7 @@ import RightSide from "./rightSide";
 
 const Dashboard: FC = () => {
   return (
-    <div className="w-[100%] flex mt-[46px] gap-[50px]">
+    <div className="w-[100%] flex mt-[46px] gap-[70px]">
       <LeftSide />
       <RightSide />
     </div>

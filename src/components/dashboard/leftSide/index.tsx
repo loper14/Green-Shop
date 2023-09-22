@@ -6,6 +6,7 @@ const LeftSide: FC = () => {
   const [data, setData] = useState([]);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(1000);
+  const [active, setActive] = useState("House Plants");
   const axios = useAxios();
   const title_style: string =
     "text-[#3D3D3D] text-[18px] font-bold	leading-4 mb-[7px] pl-[18px] pt-[14px]";
@@ -46,9 +47,14 @@ const LeftSide: FC = () => {
           return (
             <div
               key={value._id}
-              className="flex cursor-pointer gap-[126px]  items-center pl-[30px]"
+              className={`flex cursor-pointer gap-[126px]  items-center pl-[30px] duration-[0.2s] hover:text-[#46A358]  text-[${
+                active === value.title ? "#46A358" : "#3d3d3d"
+              }] font-${active === value.title ? "bold" : "normal"} `}
+              onClick={() => {
+                setActive(value.title);
+              }}
             >
-              <div className="text-[#3D3D3D] text-[16px] font-normal w-[105px] leading-10	">
+              <div className=" text-[16px]  w-[105px] leading-10	">
                 {value.title}
               </div>
               <div>({value.count})</div>

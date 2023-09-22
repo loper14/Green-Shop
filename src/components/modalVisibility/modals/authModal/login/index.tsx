@@ -5,7 +5,11 @@ import { useAxios } from "../../../../../hooks/useAxios";
 import type { AuthResponseType } from "../../../../../@types";
 import { useSignIn } from "react-auth-kit";
 import { useReduxDispatch } from "../../../../../hooks/useRedux";
-import { setAuthModalVisibility } from "../../../../../redux/modalSlice";
+import {
+  setAuthModalVisibility,
+  setInProcessModalVisibility,
+} from "../../../../../redux/modalSlice";
+import { signInWithGoogle } from "../../../../../config/config";
 
 interface OnAuthType {
   email: string;
@@ -32,6 +36,30 @@ const Login: FC = () => {
         authState: data.data.user,
       });
       dispatch(setAuthModalVisibility({ loading: false, open: false }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onAuthWithGoogle = async () => {
+    try {
+      dispatch(setAuthModalVisibility({ loading: false, open: false }));
+      const result = await signInWithGoogle();
+      dispatch(setInProcessModalVisibility());
+      const { data }: { data: AuthResponseType } = await axios({
+        url: "/user/sign-in/google",
+        method: "POST",
+        body: {
+          email: result.user.email,
+        },
+      });
+      signIn({
+        token: data.data.token,
+        expiresIn: 3600,
+        tokenType: "Bearer",
+        authState: data.data.user,
+      });
+      dispatch(setInProcessModalVisibility());
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +115,10 @@ const Login: FC = () => {
         <Divider className="w-[300px]">Or Login with</Divider>
       </div>
       <div className="flex flex-col gap-[20px] items-center pt-[8px]">
-        <button className="flex gap-[15px] border rounded-md border-[#EAEAEA] w-[300px] h-[40px] items-center justify-center">
+        <button
+          onClick={() => onAuthWithGoogle()}
+          className="flex gap-[15px] border rounded-md border-[#EAEAEA] w-[300px] h-[40px] items-center justify-center"
+        >
           <img
             src="https://flower-store.vercel.app/static/media/google.673c67d1582f1818bba6cea96f65e6c8.svg"
             alt=""
