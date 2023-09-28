@@ -10,7 +10,7 @@ interface AxiosProps {
 
 export const useAxios = () => {
   const request = async (props: AxiosProps) => {
-    const { url, method = "GET", body, headers } = props;
+    const { url, method = "GET", body, headers, params } = props;
     return await axios({
       url: `${process.env.REACT_APP_MAIN_URL}${url}`,
       method,
@@ -23,6 +23,7 @@ export const useAxios = () => {
       },
       params: {
         access_token: "64f4b75bf8771ae62ff9821d",
+        ...params,
       },
     });
   };

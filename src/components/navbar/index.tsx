@@ -22,7 +22,7 @@ const Navbar: FC = () => {
 
   const icon_style: string = "cursor-pointer text-[20px]";
   return (
-    <div className=" flex justify-between h-[90px] items-center border-b border-[rgba(70, 163, 88, 0.50)]">
+    <div className=" flex justify-between h-[90px] items-center border-b border-[rgba(70, 163, 88, 0.50)] max-[1500px]:justify-around">
       <div>
         <img
           src="https://firebasestorage.googleapis.com/v0/b/aema-image-upload.appspot.com/o/greenshop%2Ficons%2Flogo.svg?alt=media&token=fc9659d6-f435-43b9-a624-8b0d3a574baa"
@@ -30,7 +30,7 @@ const Navbar: FC = () => {
         />
       </div>
       <div className="flex gap-4 max-md:hidden">
-        <h3 className="cursor-pointer text-16">Home</h3>
+        <h3 className="cursor-pointer text-16 ">Home</h3>
         <h3 className="cursor-pointer text-16">Blog</h3>
       </div>
       <div className="flex gap-[30px] items-center">

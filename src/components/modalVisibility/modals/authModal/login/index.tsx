@@ -1,15 +1,19 @@
 import { Button, Divider, Form, Input } from "antd";
 import { type FC } from "react";
-import { ScanOutlined } from "@ant-design/icons";
+import { ScanOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useAxios } from "../../../../../hooks/useAxios";
 import type { AuthResponseType } from "../../../../../@types";
 import { useSignIn } from "react-auth-kit";
-import { useReduxDispatch } from "../../../../../hooks/useRedux";
+import {
+  useReduxDispatch,
+  useReduxSelector,
+} from "../../../../../hooks/useRedux";
 import {
   setAuthModalVisibility,
   setInProcessModalVisibility,
 } from "../../../../../redux/modalSlice";
 import { signInWithGoogle } from "../../../../../config/config";
+import { useNotificationAPI } from "../../../../../generic/notification";
 
 interface OnAuthType {
   email: string;
@@ -17,52 +21,62 @@ interface OnAuthType {
 }
 
 const Login: FC = () => {
+  const notifier = useNotificationAPI();
   const signIn = useSignIn();
   const dispatch = useReduxDispatch();
   const axios = useAxios();
+  const { authModalVisibility } = useReduxSelector((state) => state.modal);
   const onAuth = async (e: OnAuthType) => {
     if (!e.email || !e.password) return;
-    try {
-      const { data }: { data: AuthResponseType } = await axios({
-        url: "/user/sign-in",
-        method: "POST",
-        body: e,
-        headers: {},
+    dispatch(setAuthModalVisibility({ loading: true, open: true }));
+    await axios({
+      url: "/user/sign-in",
+      method: "POST",
+      body: e,
+      headers: {},
+    })
+      .then((res) => {
+        const { data }: AuthResponseType = res.data;
+        signIn({
+          token: data.token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: data.user,
+        });
+        dispatch(setAuthModalVisibility({ loading: false, open: false }));
+      })
+      .catch((error) => {
+        dispatch(setAuthModalVisibility({ loading: false, open: true }));
+        notifier(error.response.status);
       });
-      signIn({
-        token: data.data.token,
-        expiresIn: 3600,
-        tokenType: "Bearer",
-        authState: data.data.user,
-      });
-      dispatch(setAuthModalVisibility({ loading: false, open: false }));
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const onAuthWithGoogle = async () => {
-    try {
-      dispatch(setAuthModalVisibility({ loading: false, open: false }));
-      const result = await signInWithGoogle();
-      dispatch(setInProcessModalVisibility());
-      const { data }: { data: AuthResponseType } = await axios({
-        url: "/user/sign-in/google",
-        method: "POST",
-        body: {
-          email: result.user.email,
-        },
+    dispatch(setAuthModalVisibility({ loading: false, open: false }));
+    const result = await signInWithGoogle();
+    dispatch(setInProcessModalVisibility());
+    axios({
+      url: "/user/sign-in/google",
+      method: "POST",
+      body: {
+        email: result.user.email,
+      },
+    })
+      .then((res) => {
+        const { data }: AuthResponseType = res.data;
+        signIn({
+          token: data.token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: data.user,
+        });
+        dispatch(setInProcessModalVisibility());
+        notifier(200);
+      })
+      .catch((error) => {
+        dispatch(setInProcessModalVisibility());
+        notifier(error.response.status);
       });
-      signIn({
-        token: data.data.token,
-        expiresIn: 3600,
-        tokenType: "Bearer",
-        authState: data.data.user,
-      });
-      dispatch(setInProcessModalVisibility());
-    } catch (error) {
-      console.log(error);
-    }
   };
   return (
     <div className="w-4/5 m-auto">
@@ -107,7 +121,7 @@ const Login: FC = () => {
           type="submit"
           className="w-full h-[45px] my-[27px] bg-[#46A358] text-white rounded-md"
         >
-          Login
+          {authModalVisibility.loading ? <LoadingOutlined /> : "Login"}
         </button>
       </Form>
 

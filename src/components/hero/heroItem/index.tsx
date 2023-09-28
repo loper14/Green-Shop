@@ -9,7 +9,7 @@ const HeroItem: FC<HeroItemType> = ({
   button_text,
 }) => {
   return (
-    <div className="flex  justify-around">
+    <div className="flex  justify-around max-[1500px]:justify-center">
       <div className="flex-[2] ml-[40px]">
         <div className="text-[#3D3D3D] text-[14px] uppercase mt-[80px]">
           WELCOME TO GREENSHOP

@@ -3,13 +3,11 @@ import HomeComponent from "../components/home";
 import Blog from "../components/blog";
 import Trends from "../components/trends";
 import Footer from "../components/footer";
-import Dashboard from "../components/dashboard";
 
 const Home: FC = () => {
   return (
-    <div>
+    <div className="m-auto w-[1400px]">
       <HomeComponent />
-      <Dashboard />
       <Trends />
       <Blog />
       <Footer />

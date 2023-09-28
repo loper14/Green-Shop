@@ -9,9 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider>
-    <div className="w-[1400px] m-auto max-md:w-[550px]">
-      <Home />
-      <ModalVisibility />
-    </div>
+    <Home />
+    <ModalVisibility />
   </Provider>,
 );
