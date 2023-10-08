@@ -1,8 +1,36 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import FooterCard from "../../generic/footerCard";
 import { Button, Input, Space } from "antd";
+import useQueryHandler from "../../hooks/useQuery";
+import { useAxios } from "../../hooks/useAxios";
+import { useNotificationAPI } from "../../generic/notification";
+import { LoadingOutlined, CheckOutlined } from "@ant-design/icons";
 
 const Footer: FC = () => {
+  const [inputData, setInputData] = useState();
+  const notifier = useNotificationAPI();
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const axios = useAxios();
+  const onJoin = () => {
+    if (!inputData) return;
+    setLoading(true);
+    axios({
+      url: "/features/email-subscribe",
+      method: "POST",
+      body: {
+        email: inputData,
+      },
+      params: {
+        access_token: "64f4b75bf8771ae62ff9821d",
+      },
+    }).then((res) => {
+      notifier(201);
+      setLoading(false);
+      setDone(true);
+    });
+  };
+
   const footer_item_style: string =
     "text-[#3D3D3D] text-[14px] font-normal leading-8 cursor-pointer";
   const footer_h3_style: string =
@@ -33,12 +61,22 @@ const Footer: FC = () => {
           </div>
           <Space.Compact className="my-5">
             <Input
+              required={true}
               className="text-[#ACACAC] w-[250px] "
-              defaultValue="enter your email address..."
+              placeholder="enter your email address..."
+              onChange={(e: any) => {
+                setInputData(e.target.value);
+              }}
             />
-            <Button type="primary" className="bg-[#46A358]">
-              Join
-            </Button>
+            {done ? (
+              <Button type="primary" className="bg-[#46A358]">
+                <CheckOutlined />
+              </Button>
+            ) : (
+              <Button onClick={onJoin} type="primary" className="bg-[#46A358]">
+                {loading ? <LoadingOutlined /> : "Join"}
+              </Button>
+            )}
           </Space.Compact>
           <div className="text-[#727272] w-[354px] font-normal leading-6">
             We usually post offers and challenges in newsletter. We’re your

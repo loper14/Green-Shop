@@ -25,3 +25,7 @@
     border-radius: 50%;
   }
 }
+.main_card.ant-skeleton.ant-skeleton-element .ant-skeleton-image {
+  width: 300px;
+  height: 200px;
+}
