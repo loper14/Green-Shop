@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import type { MainFlowerType } from "../../../../../@types";
 import { UseLoader } from "../../../../../generic/loaders";
 
-interface FlowerCategoryType {
+export interface FlowerCategoryType {
   data?: MainFlowerType[];
   isLoading: boolean;
   isError: boolean;

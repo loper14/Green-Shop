@@ -6,7 +6,6 @@ import Category from "./category";
 const HomeComponent: FC = () => {
   return (
     <div>
-      <Navbar />
       <Hero />
       <Category />
     </div>

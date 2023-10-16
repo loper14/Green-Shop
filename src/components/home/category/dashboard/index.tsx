@@ -25,7 +25,6 @@ const Dashboard: FC = () => {
   const title_style: string =
     "text-[#3D3D3D] text-[18px] font-bold	leading-4 mb-[7px] pl-[18px] pt-[14px]";
   const [params, setParams] = useSearchParams();
-  const oldParams = Object.fromEntries(params.entries());
 
   const { data, isLoading, isError } = useQueryHandler({
     queryKey: "/categories",

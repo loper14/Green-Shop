@@ -42,4 +42,5 @@ export interface MainFlowerType {
   sold_times: number;
   created_by: string;
   created_at: string;
+  data: object;
 }

@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import HomeComponent from "../components/home";
-import Blog from "../components/blog";
-import Trends from "../components/trends";
-import Footer from "../components/footer";
+import HomeComponent from "../../components/home";
+import Blog from "../../components/blog";
+import Trends from "../../components/trends";
+import Footer from "../../components/footer";
 
 const Home: FC = () => {
   return (
