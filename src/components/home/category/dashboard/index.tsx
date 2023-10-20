@@ -20,8 +20,6 @@ interface DashboardItemType {
 const Dashboard: FC = () => {
   const { category_loader } = UseLoader();
   const [rangeValue, setRangeValue] = useState<[number, number]>([0, 1000]);
-  const dispatch = useReduxDispatch();
-  const axios = useAxios();
   const title_style: string =
     "text-[#3D3D3D] text-[18px] font-bold	leading-4 mb-[7px] pl-[18px] pt-[14px]";
   const [params, setParams] = useSearchParams();

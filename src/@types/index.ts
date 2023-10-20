@@ -7,6 +7,11 @@ export interface HeroItemType {
 }
 export type HeroType = HeroItemType[];
 
+export interface WishItemType {
+  flower_id: string;
+  route_path: string;
+}
+
 export interface UserType {
   _id?: string;
   create_account_limit?: number;
@@ -14,6 +19,7 @@ export interface UserType {
   surname?: string;
   name?: string;
   email?: string;
+  wishlist?: WishItemType[];
 }
 
 export interface AuthResponseType {

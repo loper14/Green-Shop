@@ -1,6 +1,6 @@
 import { notification } from "antd";
 
-type NotifierStatusType = 409 | 200 | 201;
+type NotifierStatusType = 409 | 200 | 201 | "add" | "remove";
 
 export const useNotificationAPI = () => {
   const notifier = (status?: NotifierStatusType) => {
@@ -18,6 +18,14 @@ export const useNotificationAPI = () => {
         return notification.success({
           message: "Successfully",
           description: "Email successfully added to our daily newsletters.",
+        });
+      case "add":
+        return notification.success({
+          message: "Added to your wishlist!",
+        });
+      case "remove":
+        return notification.success({
+          message: "Removed from your wishlist!",
         });
       default:
         return notification.error({

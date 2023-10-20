@@ -35,6 +35,7 @@ const Register: FC = () => {
           tokenType: "Bearer",
           authState: data.user,
         });
+        localStorage.setItem("token", data.token);
         dispatch(setAuthModalVisibility({ loading: false, open: false }));
       })
       .catch((err) => {

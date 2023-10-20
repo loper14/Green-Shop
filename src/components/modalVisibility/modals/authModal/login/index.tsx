@@ -70,6 +70,7 @@ const Login: FC = () => {
           tokenType: "Bearer",
           authState: data.user,
         });
+        localStorage.setItem("token", data.token);
         dispatch(setInProcessModalVisibility());
         notifier(200);
       })

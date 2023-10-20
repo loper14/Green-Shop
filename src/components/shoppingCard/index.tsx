@@ -2,8 +2,10 @@ import React from "react";
 import RelatedProducts from "../../pages/shop/relatedProducts";
 import Footer from "../footer";
 import { Empty } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCard = () => {
+  const navigate = useNavigate();
   return (
     <div className="pt-14 h-[600px]">
       <div className="flex justify-center gap-20">
@@ -15,6 +17,12 @@ const ShoppingCard = () => {
             <h3 className="w-[20%]">Total</h3>
           </div>
           <Empty className="m-auto pt-14" />
+          <button
+            onClick={() => navigate("/")}
+            className=" m-auto bg-[#46A358] flex rounded-md items-center justify-center gap-1 text-base text-white h-[40px] px-[10px] mt-[15px]"
+          >
+            LET&apos;S SHOP
+          </button>
         </div>
         <div>
           <div className="font-bold pb-[11px] border-b border-[#46A35880]">
