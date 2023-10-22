@@ -19,7 +19,7 @@ export interface UserType {
   surname?: string;
   name?: string;
   email?: string;
-  wishlist?: WishItemType[];
+  wishlist: WishItemType[];
 }
 
 export interface AuthResponseType {

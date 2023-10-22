@@ -19,7 +19,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 const Navbar: FC = () => {
   const dispatch = useReduxDispatch();
   const isAuthed = useIsAuthenticated()();
-  const auth: UserType = useAuthUser()() ?? {};
+  const auth = useAuthUser()() ?? { wishlist: [] };
   const navigate = useNavigate();
   const { category, flower_id } = useParams();
 
@@ -46,6 +46,7 @@ const Navbar: FC = () => {
           />
           <button
             onClick={() => {
+              if (isAuthed) return navigate("/profile/account-details");
               dispatch(setAuthModalVisibility({ loading: false, open: true }));
             }}
             className="text-white w-[100px] h-[35px] cursor-pointer bg-[#46A358] flex items-center justify-center rounded-md gap-2 max-md:hidden "

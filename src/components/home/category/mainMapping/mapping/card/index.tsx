@@ -1,5 +1,9 @@
 import type { FC } from "react";
-import type { MainFlowerType, UserType } from "../../../../../../@types";
+import type {
+  MainFlowerType,
+  UserType,
+  WishItemType,
+} from "../../../../../../@types";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthUser, useIsAuthenticated, useSignIn } from "react-auth-kit";
@@ -17,7 +21,7 @@ const Card: FC<MainFlowerType> = ({
 }) => {
   const [params] = useSearchParams();
 
-  const auth: UserType = useAuthUser()() ?? {};
+  const auth = useAuthUser()() ?? { wishlist: [] };
   const isAuthenticated = useIsAuthenticated();
   const dispatch = useReduxDispatch();
   const notifier = useNotificationAPI();
@@ -33,19 +37,24 @@ const Card: FC<MainFlowerType> = ({
       tokenType: "Bearer",
       authState: {
         ...auth,
-        shouldUpdate,
+        ...shouldUpdate,
       },
     });
+    console.log(shouldUpdate);
   };
 
-  const foundData = auth.wishlist?.some((value) => value.flower_id === _id);
+  const foundData = auth.wishlist?.some(
+    (value: WishItemType) => value?.flower_id === _id,
+  );
   const isLiked = (id: string) => {
     if (foundData) {
       notifier("remove");
       userUpdater({
         shouldUpdate: {
           ...auth,
-          wishlist: auth.wishlist?.filter((value) => value.flower_id !== id),
+          wishlist: auth.wishlist?.filter(
+            (value: WishItemType) => value?.flower_id !== id,
+          ),
         },
       });
 
@@ -64,12 +73,11 @@ const Card: FC<MainFlowerType> = ({
       });
     } else {
       notifier("add");
-
       userUpdater({
         shouldUpdate: {
           ...auth,
           wishlist: [
-            { ...auth?.wishlist },
+            ...Array(...auth?.wishlist),
             { flower_id: _id, route_path: category },
           ],
         },
@@ -139,7 +147,11 @@ const Card: FC<MainFlowerType> = ({
             }}
             className="bg-[#FFFFFF] w-[35px] h-[35px] flex rounded-lg justify-center items-center  cursor-pointer text-[20px]"
           >
-            {foundData ? <HeartFilled /> : <HeartOutlined />}
+            {foundData ? (
+              <HeartFilled className="text-red-500" />
+            ) : (
+              <HeartOutlined />
+            )}
           </div>
           <div
             onClick={() => navigate(`/shop/${category}/${_id}`)}

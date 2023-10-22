@@ -25,9 +25,6 @@ const Mapping: FC = () => {
   const range_min: string = params.get("range_min") ?? "0";
   const range_max: string = params.get("range_max") ?? "1000";
 
-  const navigate = useNavigate();
-  const { flower_id } = useParams();
-
   const { data, isLoading, isError }: FlowerCategoryType = useQueryHandler({
     queryKey: `/${category}?range_min=${range_min}&range_max${range_max}$sort=${sort}`,
     url: `/flower/category/${category}`,
