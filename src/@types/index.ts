@@ -50,3 +50,10 @@ export interface MainFlowerType {
   created_at: string;
   data: object;
 }
+export interface ShoppingType extends MainFlowerType {
+  count: number;
+}
+export interface CouponType {
+  message: "success" | "error";
+  data: { id: number; title: string; discount_for: number; code: string };
+}

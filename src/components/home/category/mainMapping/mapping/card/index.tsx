@@ -4,23 +4,22 @@ import type {
   UserType,
   WishItemType,
 } from "../../../../../../@types";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import {
+  HeartOutlined,
+  HeartFilled,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthUser, useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useReduxDispatch } from "../../../../../../hooks/useRedux";
 import { useNotificationAPI } from "../../../../../../generic/notification";
 import { useAxios } from "../../../../../../hooks/useAxios";
 import { setAuthModalVisibility } from "../../../../../../redux/modalSlice";
+import { setShoppingData } from "../../../../../../redux/shoppingSlice";
 
-const Card: FC<MainFlowerType> = ({
-  _id,
-  main_image,
-  discount,
-  price,
-  title,
-}) => {
+const Card: FC<MainFlowerType> = (props) => {
   const [params] = useSearchParams();
-
+  const { _id, main_image, discount, price, title } = props;
   const auth = useAuthUser()() ?? { wishlist: [] };
   const isAuthenticated = useIsAuthenticated();
   const dispatch = useReduxDispatch();
@@ -40,7 +39,6 @@ const Card: FC<MainFlowerType> = ({
         ...shouldUpdate,
       },
     });
-    console.log(shouldUpdate);
   };
 
   const foundData = auth.wishlist?.some(
@@ -113,24 +111,11 @@ const Card: FC<MainFlowerType> = ({
 
         <img className="w-[80%] h-auto" src={main_image} alt="Image" />
         <div className="hidden absolute inset-x-auto bottom-2 gap-4 group-hover:flex">
-          <div className="bg-[#FFFFFF] w-[35px] h-[35px] flex rounded-lg justify-center items-center  cursor-pointer text-[20px]">
-            <span
-              role="img"
-              aria-label="shopping-cart"
-              className="anticon anticon-shopping-cart"
-            >
-              <svg
-                viewBox="0 0 1024 1024"
-                focusable="false"
-                data-icon="shopping-cart"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M922.9 701.9H327.4l29.9-60.9 496.8-.9c16.8 0 31.2-12 34.2-28.6l68.8-385.1c1.8-10.1-.9-20.5-7.5-28.4a34.99 34.99 0 00-26.6-12.5l-632-2.1-5.4-25.4c-3.4-16.2-18-28-34.6-28H96.5a35.3 35.3 0 100 70.6h125.9L246 312.8l58.1 281.3-74.8 122.1a34.96 34.96 0 00-3 36.8c6 11.9 18.1 19.4 31.5 19.4h62.8a102.43 102.43 0 00-20.6 61.7c0 56.6 46 102.6 102.6 102.6s102.6-46 102.6-102.6c0-22.3-7.4-44-20.6-61.7h161.1a102.43 102.43 0 00-20.6 61.7c0 56.6 46 102.6 102.6 102.6s102.6-46 102.6-102.6c0-22.3-7.4-44-20.6-61.7H923c19.4 0 35.3-15.8 35.3-35.3a35.42 35.42 0 00-35.4-35.2zM305.7 253l575.8 1.9-56.4 315.8-452.3.8L305.7 253zm96.9 612.7c-17.4 0-31.6-14.2-31.6-31.6 0-17.4 14.2-31.6 31.6-31.6s31.6 14.2 31.6 31.6a31.6 31.6 0 01-31.6 31.6zm325.1 0c-17.4 0-31.6-14.2-31.6-31.6 0-17.4 14.2-31.6 31.6-31.6s31.6 14.2 31.6 31.6a31.6 31.6 0 01-31.6 31.6z"></path>
-              </svg>
-            </span>
+          <div
+            onClick={() => dispatch(setShoppingData(props))}
+            className="bg-[#FFFFFF] w-[35px] h-[35px] flex rounded-lg justify-center items-center  cursor-pointer text-[20px]"
+          >
+            <ShoppingCartOutlined />
           </div>
           <div
             onClick={() => {
