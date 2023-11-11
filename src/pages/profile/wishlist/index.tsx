@@ -5,6 +5,7 @@ import type { FlowerCategoryType } from "../../../components/home/category/mainM
 import { useSearchParams } from "react-router-dom";
 import useQueryHandler from "../../../hooks/useQuery";
 import Card from "../../../components/home/category/mainMapping/mapping/card";
+import { Empty } from "antd";
 
 const Wishlist: FC = () => {
   const auth = useAuthUser()() ?? { wishlist: [] };
@@ -29,19 +30,30 @@ const Wishlist: FC = () => {
   });
 
   return (
-    <div className=" grid grid-cols-3 gap-4">
-      {data?.map((value) => {
-        return (
-          <div key={value._id}>
-            {auth.wishlist.map(
-              (v: WishItemType) =>
-                value._id === v.flower_id && (
-                  <Card key={v.flower_id} {...value} />
-                ),
-            )}
-          </div>
-        );
-      })}
+    <div>
+      {auth.wishlist.length > 0 ? (
+        <div className=" grid grid-cols-3 gap-4">
+          {data?.map((value) => {
+            return (
+              <div key={value._id}>
+                {auth.wishlist.map(
+                  (v: WishItemType) =>
+                    value._id === v.flower_id && (
+                      <Card key={v.flower_id} {...value} />
+                    ),
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <Empty
+            description="No wish products yet..."
+            style={{ fontSize: "19px", marginTop: "50px" }}
+          />
+        </div>
+      )}
     </div>
   );
 };

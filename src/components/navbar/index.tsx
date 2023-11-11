@@ -11,19 +11,20 @@ import {
   setAuthModalVisibility,
   setSiteMapModalVisibility,
 } from "../../redux/modalSlice";
-import { useReduxDispatch } from "../../hooks/useRedux";
+import { useReduxDispatch, useReduxSelector } from "../../hooks/useRedux";
 import { useAuthUser, useIsAuthenticated } from "react-auth-kit";
 import type { UserType } from "../../@types";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
+import NotificationMenu from "./notificationMenu";
 
 const Navbar: FC = () => {
   const dispatch = useReduxDispatch();
   const isAuthed = useIsAuthenticated()();
   const auth = useAuthUser()() ?? { wishlist: [] };
   const navigate = useNavigate();
-  const { category, flower_id } = useParams();
-
+  const { data } = useReduxSelector((state) => state.shopping);
   const icon_style: string = "cursor-pointer text-[20px]";
+
   return (
     <div className="w-[90%] m-auto">
       <div className=" flex justify-between h-[90px] items-center border-b border-[rgba(70, 163, 88, 0.50)] max-[1500px]:justify-around">
@@ -39,11 +40,20 @@ const Navbar: FC = () => {
         </div>
         <div className="flex gap-[30px] items-center">
           <SearchOutlined className={icon_style} />
-          <BellOutlined className={icon_style} />
-          <ShoppingCartOutlined
-            onClick={() => navigate("/shopping-card")}
-            className={icon_style}
-          />
+          <NotificationMenu>
+            <BellOutlined className={icon_style} />
+          </NotificationMenu>
+          <div>
+            <ShoppingCartOutlined
+              onClick={() => navigate("/shopping-card")}
+              className={icon_style}
+            />
+            {data.length > 0 && (
+              <div className="bg-[#ff4d4f] w-[20px] h-[20px]  absolute top-5 ml-3 rounded-xl flex justify-center text-white items-center text-[12px]">
+                {data.length}
+              </div>
+            )}
+          </div>
           <button
             onClick={() => {
               if (isAuthed) return navigate("/profile/account-details");

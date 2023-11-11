@@ -7,7 +7,7 @@ import ProductInfo from "./ProductInfo";
 const ShoppingCard = () => {
   return (
     <div className="pt-14 h-[600px]">
-      <div className="flex justify-center gap-28">
+      <div className="flex justify-center gap-20">
         <ProductMap />
         <ProductInfo />
       </div>

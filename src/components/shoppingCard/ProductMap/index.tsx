@@ -8,13 +8,15 @@ import {
   deleteProduct,
   incrementCountOfProduct,
 } from "../../../redux/shoppingSlice";
+import { useNotificationAPI } from "../../../generic/notification";
 
 const ProductMap: FC = () => {
   const { data } = useReduxSelector((state) => state.shopping);
   const navigate = useNavigate();
   const dispatch = useReduxDispatch();
+  const notifier = useNotificationAPI();
   return (
-    <div className="w-[65%]">
+    <div className="w-[70%]">
       <div className=" pb-[11px] border-b border-[#46A35880] flex max-lg:hidden">
         <h3 className="w-[40%]">Products</h3>
         <h3 className="w-[20%]">Price</h3>
@@ -64,11 +66,16 @@ const ProductMap: FC = () => {
                       +
                     </button>
                   </div>
-                  <div className="w-[20%] gap-20 flex items-center justify-between pr-[10px]">
-                    ${(value.count * value.price).toFixed(2)}
+                  <div className="gap-20 flex items-center justify-between pr-[10px]">
+                    <div className="w-[90px]">
+                      ${(value.count * value.price).toFixed(2)}
+                    </div>
                     <DeleteOutlined
-                      onClick={() => dispatch(deleteProduct(value._id))}
-                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        notifier("removeFromCart");
+                        dispatch(deleteProduct(value._id));
+                      }}
+                      style={{ cursor: "pointer", width: "30px" }}
                     />
                   </div>
                 </div>

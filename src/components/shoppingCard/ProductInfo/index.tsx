@@ -6,7 +6,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 const ProductInfo: FC = () => {
   const couponRef = useRef<HTMLInputElement>(null);
+
   const axios = useAxios();
+  const [disabling, setDisabling] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const { data } = useReduxSelector((state) => state.shopping);
@@ -26,6 +28,7 @@ const ProductInfo: FC = () => {
         coupon_code: value,
       },
     });
+
     setLoading(false);
   };
 

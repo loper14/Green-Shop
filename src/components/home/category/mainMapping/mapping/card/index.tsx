@@ -11,7 +11,10 @@ import {
 } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthUser, useIsAuthenticated, useSignIn } from "react-auth-kit";
-import { useReduxDispatch } from "../../../../../../hooks/useRedux";
+import {
+  useReduxDispatch,
+  useReduxSelector,
+} from "../../../../../../hooks/useRedux";
 import { useNotificationAPI } from "../../../../../../generic/notification";
 import { useAxios } from "../../../../../../hooks/useAxios";
 import { setAuthModalVisibility } from "../../../../../../redux/modalSlice";
@@ -28,6 +31,7 @@ const Card: FC<MainFlowerType> = (props) => {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const category: string = params.get("category") ?? "house-plants";
+  const { data } = useReduxSelector((state) => state.shopping);
 
   const userUpdater = ({ shouldUpdate }: { shouldUpdate: object }) => {
     signIn({
@@ -97,6 +101,13 @@ const Card: FC<MainFlowerType> = (props) => {
       });
     }
   };
+  const addToCard = (item: MainFlowerType) => {
+    const res = data.some((value) => value._id === item._id);
+    if (!res) {
+      dispatch(setShoppingData(props));
+      notifier("addToCart");
+    }
+  };
 
   return (
     <div className="w-[300px] h-[360px] " key={_id}>
@@ -112,7 +123,7 @@ const Card: FC<MainFlowerType> = (props) => {
         <img className="w-[80%] h-auto" src={main_image} alt="Image" />
         <div className="hidden absolute inset-x-auto bottom-2 gap-4 group-hover:flex">
           <div
-            onClick={() => dispatch(setShoppingData(props))}
+            onClick={() => addToCard(props)}
             className="bg-[#FFFFFF] w-[35px] h-[35px] flex rounded-lg justify-center items-center  cursor-pointer text-[20px]"
           >
             <ShoppingCartOutlined />

@@ -1,6 +1,13 @@
 import { notification } from "antd";
 
-type NotifierStatusType = 409 | 200 | 201 | "add" | "remove";
+type NotifierStatusType =
+  | 409
+  | 200
+  | 201
+  | "add"
+  | "remove"
+  | "addToCart"
+  | "removeFromCart";
 
 export const useNotificationAPI = () => {
   const notifier = (status?: NotifierStatusType) => {
@@ -26,6 +33,14 @@ export const useNotificationAPI = () => {
       case "remove":
         return notification.success({
           message: "Removed from your wishlist!",
+        });
+      case "addToCart":
+        return notification.success({
+          message: "Added to your shopping cart!",
+        });
+      case "removeFromCart":
+        return notification.success({
+          message: "Removed from your shopping cart!",
         });
       default:
         return notification.error({
